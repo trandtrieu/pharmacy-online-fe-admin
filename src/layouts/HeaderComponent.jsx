@@ -1,3 +1,5 @@
+import { faPills } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 
@@ -31,11 +33,7 @@ class HeaderComponent extends Component {
                   <span className="hide-menu">Home</span>
                 </li>
                 <li className="sidebar-item">
-                  <Link
-                    className="sidebar-link"
-                    to="/dashboard"
-                    // aria-expanded="false"
-                  >
+                  <Link className="sidebar-link" to="/dashboard">
                     <span>
                       <i className="ti ti-layout-dashboard" />
                     </span>
@@ -43,13 +41,17 @@ class HeaderComponent extends Component {
                   </Link>
                 </li>
                 <li className="sidebar-item">
-                  <Link
-                    className="sidebar-link"
-                    to="/prescription-manage"
-                    // aria-expanded="false"
-                  >
+                  <Link className="sidebar-link" to="/product-manage">
                     <span>
-                      <i className="ti ti-layout-dashboard" />
+                      <FontAwesomeIcon icon={faPills} />{" "}
+                    </span>
+                    <span className="hide-menu">Products</span>
+                  </Link>
+                </li>
+                <li className="sidebar-item">
+                  <Link className="sidebar-link" to="/prescription-manage">
+                    <span>
+                      <FontAwesomeIcon icon={faPills} />{" "}
                     </span>
                     <span className="hide-menu">Prescriptions</span>
                   </Link>

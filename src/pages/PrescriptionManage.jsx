@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import PrescriptionServices from "../services/PrescriptionServices";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faReply, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleInfo,
+  faReply,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
 
@@ -131,6 +135,14 @@ class PrescriptionManage extends Component {
       prescriptionItemToDelete: null,
     });
   };
+
+  toProductList() {
+    this.props.history.push(`/product-manage`);
+  }
+
+  toDetailandHandle(id) {
+    this.props.history.push(`/prescription-detail-handle/${id}`);
+  }
   render() {
     const { enlargedImage } = this.state;
     return (
@@ -372,8 +384,21 @@ class PrescriptionManage extends Component {
                                 >
                                   <FontAwesomeIcon icon={faTrash} />
                                 </button>
-                                <button className="btn btn-primary">
+                                &nbsp;
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={() => this.toProductList()}
+                                >
                                   <FontAwesomeIcon icon={faReply} />
+                                </button>
+                                &nbsp;
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={() =>
+                                    this.toDetailandHandle(prescriptionItem.id)
+                                  }
+                                >
+                                  <FontAwesomeIcon icon={faCircleInfo} />
                                 </button>
                               </td>
                             </tr>

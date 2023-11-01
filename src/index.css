@@ -34,3 +34,13 @@ code {
 .enlarged-image {
   max-width: 60%;
 }
+
+
+.product-link {
+  display: block;
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}

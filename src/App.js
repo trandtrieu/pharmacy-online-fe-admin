@@ -6,6 +6,9 @@ import HeaderComponent from "./layouts/HeaderComponent";
 import DashBoard from "./pages/DashBoard";
 import PrescriptionManage from "./pages/PrescriptionManage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ProductManage from "./pages/ProductManage";
+import PrescriptionDetailHandle from "./pages/PrescriptionDetailHandle";
+import ProductItem from "./pages/ProductItem";
 
 function App() {
   return (
@@ -25,7 +28,14 @@ function App() {
           <Route path="/" exact component={PrescriptionManage} />
           <Route path="/prescription-manage" component={PrescriptionManage} />
           <Route path="/dashboard" component={DashBoard} />
-        </Switch>{" "}
+          <Route path="/product-manage" component={ProductManage} />
+          <Route path="/product-build/:account_id" component={ProductItem} />
+
+          <Route
+            path="/prescription-detail-handle/:id"
+            component={PrescriptionDetailHandle}
+          />
+        </Switch>
       </Router>
     </div>
   );

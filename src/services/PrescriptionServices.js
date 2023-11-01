@@ -5,8 +5,12 @@ const PRESCRIPTION_API_BASE_URL =
   "http://localhost:8080/pharmacy-online/admin/prescriptions";
 
 class PrescriptionServices {
-  getListPrescription(status) {
+  getListPrescription() {
     return axios.get(PRESCRIPTION_API_BASE_URL + "/list");
+  }
+
+  getPrescriptionDetail(id) {
+    return axios.get(PRESCRIPTION_API_BASE_URL + "/view/" + id);
   }
 
   getListPrescriptionByFilterStatus(status) {
