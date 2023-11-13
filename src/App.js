@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProductManage from "./pages/ProductManage";
 import PrescriptionDetailHandle from "./pages/PrescriptionDetailHandle";
 import ProductItem from "./pages/ProductItem";
+import CreateProductComponent from "./pages/CreateProductComponent";
+import ViewProductDetailComponent from "./pages/ViewProductDetailComponent";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/dashboard" component={DashBoard} />
           <Route path="/product-manage" component={ProductManage} />
           <Route path="/product-build/:account_id" component={ProductItem} />
+          <Route path="/add-product/:id" component={CreateProductComponent} />
+          <Route path="/view-product-by-id/:id" component={ViewProductDetailComponent} />
 
           <Route
             path="/prescription-detail-handle/:id"
