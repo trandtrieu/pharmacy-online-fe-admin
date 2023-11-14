@@ -50,7 +50,7 @@ class PrescriptionManage extends Component {
         console.log(res.data);
       })
       .catch((error) => {
-        console.error("Lỗi khi tải sản phẩm:", error);
+        console.error("Lỗi khi tải toa thuốc:", error);
       });
   }
 
@@ -277,149 +277,165 @@ class PrescriptionManage extends Component {
                         </div>
                       </div>
                     </div>
-                    <div className="table-responsive">
-                      <table className="table text-nowrap mb-0 align-middle">
-                        <thead className="text-dark fs-4">
-                          <tr>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Code</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Name</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Contact</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Note</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">File </h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Date </h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Status </h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Action </h6>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.prescriptions.map((prescriptionItem) => (
-                            <tr key={prescriptionItem.id}>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-0">
-                                  {prescriptionItem.id}
-                                </h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <p className="mb-0 fw-normal">
-                                  {" "}
-                                  {prescriptionItem.name}
-                                </p>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-1">
-                                  {prescriptionItem.email}
-                                </h6>
-                                <span className="fw-normal">
-                                  {" "}
-                                  {prescriptionItem.phone}
-                                </span>
-                              </td>
-
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-0 fs-4">
-                                  {prescriptionItem.note}
-                                </h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-0 fs-4">
-                                  <img
-                                    src={`assets/images/${prescriptionItem.imageUrls}`}
-                                    alt="em"
-                                    width={35}
-                                    height={35}
-                                    onClick={() =>
-                                      this.enlargeImage(
-                                        `assets/images/${prescriptionItem.imageUrls}`
-                                      )
-                                    }
-                                  />
-                                </h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-1">
-                                  {prescriptionItem.createdDate}
-                                </h6>
-                                <span className="fw-normal">
-                                  {prescriptionItem.createdTime}
-                                </span>
-                              </td>
-                              <td className="border-bottom-0">
-                                <select
-                                  className="btn btn-primary"
-                                  aria-label="Default select example"
-                                  value={prescriptionItem.status}
-                                  onChange={(e) => {
-                                    this.updateStatus(
-                                      e.target.value,
-                                      prescriptionItem.id
-                                    );
-                                  }}
-                                >
-                                  <option value={0}>Waiting for advice</option>
-                                  <option value={1}>Confirmed</option>
-                                </select>
-                              </td>
-                              <td className="border-bottom-0">
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={() =>
-                                    this.handleRemoveFromCart(prescriptionItem)
-                                  }
-                                >
-                                  <FontAwesomeIcon icon={faTrash} />
-                                </button>
-                                &nbsp;
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={() => this.toProductList()}
-                                >
-                                  <FontAwesomeIcon icon={faReply} />
-                                </button>
-                                &nbsp;
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={() =>
-                                    this.toDetailandHandle(prescriptionItem.id)
-                                  }
-                                >
-                                  <FontAwesomeIcon icon={faCircleInfo} />
-                                </button>
-                              </td>
+                    {this.state.prescriptions.length === 0 ? (
+                      <div className="container">
+                        <h5 className="text-center text-warning">
+                          No prescriptions in the list
+                        </h5>
+                      </div>
+                    ) : (
+                      <div className="table-responsive">
+                        <table className="table text-nowrap mb-0 align-middle">
+                          <thead className="text-dark fs-4">
+                            <tr>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Code</h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Name</h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Contact</h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Note</h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">File </h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Date </h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Status </h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Action </h6>
+                              </th>
                             </tr>
-                          ))}
-                        </tbody>
-                        {enlargedImage && (
-                          <div
-                            className="enlarged-image-overlay"
-                            onClick={this.closeEnlargedImage}
-                          >
-                            <div className="enlarged-image-container">
-                              <img
-                                src={enlargedImage}
-                                alt="Enlarged Prescription"
-                                className="enlarged-image"
-                              />
+                          </thead>
+                          <tbody>
+                            {this.state.prescriptions.map(
+                              (prescriptionItem) => (
+                                <tr key={prescriptionItem.id}>
+                                  <td className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-0">
+                                      {prescriptionItem.id}
+                                    </h6>
+                                  </td>
+                                  <td className="border-bottom-0">
+                                    <p className="mb-0 fw-normal">
+                                      {" "}
+                                      {prescriptionItem.name}
+                                    </p>
+                                  </td>
+                                  <td className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-1">
+                                      {prescriptionItem.email}
+                                    </h6>
+                                    <span className="fw-normal">
+                                      {" "}
+                                      {prescriptionItem.phone}
+                                    </span>
+                                  </td>
+
+                                  <td className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-0 fs-4">
+                                      {prescriptionItem.note}
+                                    </h6>
+                                  </td>
+                                  <td className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-0 fs-4">
+                                      <img
+                                        src={`assets/images/${prescriptionItem.imageUrls}`}
+                                        alt="em"
+                                        width={35}
+                                        height={35}
+                                        onClick={() =>
+                                          this.enlargeImage(
+                                            `assets/images/${prescriptionItem.imageUrls}`
+                                          )
+                                        }
+                                      />
+                                    </h6>
+                                  </td>
+                                  <td className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-1">
+                                      {prescriptionItem.createdDate}
+                                    </h6>
+                                    <span className="fw-normal">
+                                      {prescriptionItem.createdTime}
+                                    </span>
+                                  </td>
+                                  <td className="border-bottom-0">
+                                    <select
+                                      className="btn btn-primary"
+                                      aria-label="Default select example"
+                                      value={prescriptionItem.status}
+                                      onChange={(e) => {
+                                        this.updateStatus(
+                                          e.target.value,
+                                          prescriptionItem.id
+                                        );
+                                      }}
+                                    >
+                                      <option value={0}>
+                                        Waiting for advice
+                                      </option>
+                                      <option value={1}>Confirmed</option>
+                                    </select>
+                                  </td>
+                                  <td className="border-bottom-0">
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={() =>
+                                        this.handleRemoveFromCart(
+                                          prescriptionItem
+                                        )
+                                      }
+                                    >
+                                      <FontAwesomeIcon icon={faTrash} />
+                                    </button>
+                                    &nbsp;
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={() => this.toProductList()}
+                                    >
+                                      <FontAwesomeIcon icon={faReply} />
+                                    </button>
+                                    &nbsp;
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={() =>
+                                        this.toDetailandHandle(
+                                          prescriptionItem.id
+                                        )
+                                      }
+                                    >
+                                      <FontAwesomeIcon icon={faCircleInfo} />
+                                    </button>
+                                  </td>
+                                </tr>
+                              )
+                            )}
+                          </tbody>
+                          {enlargedImage && (
+                            <div
+                              className="enlarged-image-overlay"
+                              onClick={this.closeEnlargedImage}
+                            >
+                              <div className="enlarged-image-container">
+                                <img
+                                  src={enlargedImage}
+                                  alt="Enlarged Prescription"
+                                  className="enlarged-image"
+                                />
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </table>
-                    </div>
+                          )}
+                        </table>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

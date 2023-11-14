@@ -1,4 +1,4 @@
-import { faPills } from "@fortawesome/free-solid-svg-icons";
+import { faFileInvoice, faPills } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
@@ -51,7 +51,7 @@ class HeaderComponent extends Component {
                 <li className="sidebar-item">
                   <Link className="sidebar-link" to="/prescription-manage">
                     <span>
-                      <FontAwesomeIcon icon={faPills} />{" "}
+                      <FontAwesomeIcon icon={faFileInvoice} />{" "}
                     </span>
                     <span className="hide-menu">Prescriptions</span>
                   </Link>

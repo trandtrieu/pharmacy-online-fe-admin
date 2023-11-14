@@ -84,8 +84,7 @@ class PrescriptionDetailHandle extends Component {
       total += cartItem.productDetail.price * cartItem.quantity;
     }
 
-    // Check if the total is greater than or equal to $300
-    if (total >= 300) {
+    if (total >= 100) {
       return {
         total: total,
         isEligibleForFreeShipping: true,
@@ -148,7 +147,6 @@ class PrescriptionDetailHandle extends Component {
     });
 
     this.setState({ carts: updatedCarts }, () => {
-      // Call handleUpdateCart to update the cart data with the new quantities
       this.handleUpdateCart();
     });
   };
@@ -356,9 +354,9 @@ class PrescriptionDetailHandle extends Component {
                                 className="progress-bar"
                                 role="progressbar"
                                 style={{
-                                  width: `${(total / 300) * 100}%`,
+                                  width: `${(total / 100) * 100}%`,
                                   backgroundColor:
-                                    total >= 300 ? "#B8E8FC" : "#A2FF86",
+                                    total >= 100 ? "#B8E8FC" : "#A2FF86",
                                 }}
                                 aria-valuemin="0"
                                 aria-valuemax="100"
@@ -381,74 +379,82 @@ class PrescriptionDetailHandle extends Component {
                         />
 
                         <div className="table-responsive">
-                          <table className="table text-nowrap mb-0 align-middle">
-                            <thead className="text-dark fs-4">
-                              <tr>
-                                <th className="border-bottom-0">
-                                  <h6 className="fw-semibold mb-0">Id</h6>
-                                </th>
-                                <th className="border-bottom-0">
-                                  <h6 className="fw-semibold mb-0">Product</h6>
-                                </th>
-                                <th className="border-bottom-0">
-                                  <h6 className="fw-semibold mb-0">Price</h6>
-                                </th>
-                                <th className="border-bottom-0">
-                                  <h6 className="fw-semibold mb-0">Quantity</h6>
-                                </th>
-                                <th className="border-bottom-0">
-                                  <h6 className="fw-semibold mb-0">Action</h6>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {this.state.carts.map((cartItem) => (
-                                <tr key={cartItem.productId}>
-                                  <td className="border-bottom-0">
+                          {this.state.carts.length === 0 ? (
+                            <tr>No items in the cart</tr>
+                          ) : (
+                            <table className="table text-nowrap mb-0 align-middle">
+                              <thead className="text-dark fs-4">
+                                <tr>
+                                  <th className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-0">Id</h6>
+                                  </th>
+                                  <th className="border-bottom-0">
                                     <h6 className="fw-semibold mb-0">
-                                      {cartItem.cartId}
+                                      Product
                                     </h6>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <h6 className="fw-semibold mb-1 product-link ">
-                                      {cartItem.productDetail.name}
+                                  </th>
+                                  <th className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-0">Price</h6>
+                                  </th>
+                                  <th className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-0">
+                                      Quantity
                                     </h6>
-                                    <span className="fw-normal">
-                                      {cartItem.productDetail.brand}
-                                    </span>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <p className="mb-0 fw-normal">
-                                      {cartItem.productDetail.price}
-                                    </p>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <input
-                                      min={0}
-                                      type="number"
-                                      value={cartItem.quantity}
-                                      onChange={(e) =>
-                                        this.handleQuantityChange(
-                                          cartItem.cartId,
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <h6 className="fw-semibold mb-0 fs-4">
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                        onClick={() =>
-                                          this.handleRemoveFromCart(cartItem)
+                                  </th>
+                                  <th className="border-bottom-0">
+                                    <h6 className="fw-semibold mb-0">Action</h6>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {this.state.carts.map((cartItem) => (
+                                  <tr key={cartItem.productId}>
+                                    <td className="border-bottom-0">
+                                      <h6 className="fw-semibold mb-0">
+                                        {cartItem.cartId}
+                                      </h6>
+                                    </td>
+                                    <td className="border-bottom-0">
+                                      <h6 className="fw-semibold mb-1 product-link ">
+                                        {cartItem.productDetail.name}
+                                      </h6>
+                                      <span className="fw-normal">
+                                        {cartItem.productDetail.brand}
+                                      </span>
+                                    </td>
+                                    <td className="border-bottom-0">
+                                      <p className="mb-0 fw-normal">
+                                        {cartItem.productDetail.price}
+                                      </p>
+                                    </td>
+                                    <td className="border-bottom-0">
+                                      <input
+                                        min={0}
+                                        type="number"
+                                        value={cartItem.quantity}
+                                        onChange={(e) =>
+                                          this.handleQuantityChange(
+                                            cartItem.cartId,
+                                            e.target.value
+                                          )
                                         }
                                       />
-                                    </h6>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                                    </td>
+                                    <td className="border-bottom-0">
+                                      <h6 className="fw-semibold mb-0 fs-4">
+                                        <FontAwesomeIcon
+                                          icon={faTrash}
+                                          onClick={() =>
+                                            this.handleRemoveFromCart(cartItem)
+                                          }
+                                        />
+                                      </h6>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          )}
                         </div>
                         <div className=" mb-5">
                           <div className="p-3">
