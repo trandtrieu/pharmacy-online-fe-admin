@@ -28,11 +28,17 @@ class HeaderComponent extends Component {
             {/* Sidebar navigation*/}
             <nav className="sidebar-nav scroll-sidebar" data-simplebar>
               <ul id="sidebarnav">
-                <li className="nav-small-cap">
+                <li
+                  className="nav-small-cap"
+                  style={{ backgroundColor: "transparent" }}
+                >
                   <i className="ti ti-dots nav-small-cap-icon fs-4" />
                   <span className="hide-menu">Home</span>
                 </li>
-                <li className="sidebar-item">
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
                   <Link className="sidebar-link" to="/dashboard">
                     <span>
                       <i className="ti ti-layout-dashboard" />
@@ -40,7 +46,10 @@ class HeaderComponent extends Component {
                     <span className="hide-menu">Dashboard</span>
                   </Link>
                 </li>
-                <li className="sidebar-item">
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
                   <Link className="sidebar-link" to="/product-manage">
                     <span>
                       <FontAwesomeIcon icon={faPills} />{" "}
@@ -48,7 +57,10 @@ class HeaderComponent extends Component {
                     <span className="hide-menu">Products</span>
                   </Link>
                 </li>
-                <li className="sidebar-item">
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
                   <Link className="sidebar-link" to="/prescription-manage">
                     <span>
                       <FontAwesomeIcon icon={faFileInvoice} />{" "}

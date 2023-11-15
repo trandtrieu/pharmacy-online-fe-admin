@@ -88,19 +88,7 @@ class CreateProductComponent extends Component {
     //     toast.error("Please select a category before saving.");
     //     return;
     // }
-    if (
-      !this.state.name ||
-      !this.state.brand ||
-      !this.state.price ||
-      !this.state.quantity ||
-      !this.state.madeIn ||
-      !this.state.category_id ||
-      !this.state.type ||
-      !this.state.status
-    ) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
+
     let product = {
       name: this.state.name,
       brand: this.state.brand,
@@ -127,6 +115,19 @@ class CreateProductComponent extends Component {
 
     // step 5
     if (this.state.id === "_add") {
+      if (
+        !this.state.name ||
+        !this.state.brand ||
+        !this.state.price ||
+        !this.state.quantity ||
+        !this.state.madeIn ||
+        !this.state.category_id ||
+        !this.state.type ||
+        !this.state.status
+      ) {
+        toast.error("Please fill in all required fields.");
+        return;
+      }
       ProductServices.CreateProduct(product).then((res) => {
         this.props.history.push("/product-manage");
         toast.success("Create Product succesfully");

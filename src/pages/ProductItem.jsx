@@ -49,13 +49,6 @@ class ProductItem extends Component {
         <div className="container p-0">
           <div className="table-responsive">
             <div className="table-wrapper">
-              <div className="table-title">
-                <div className="col-sm-6 p-4">
-                  <h2>
-                    Manage <b>Productsss</b>
-                  </h2>
-                </div>
-              </div>
               <div style={{ width: "100%" }} className="search ">
                 <div className="col-lg-4 col-6 text-left m-3 ">
                   <form action>

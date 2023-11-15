@@ -160,9 +160,7 @@ class PrescriptionDetailHandle extends Component {
     });
 
     CartServices.updateCart(updatedCartData)
-      .then(() => {
-        toast.success("Cart updated successfully!");
-      })
+      .then(() => {})
       .catch((error) => {
         console.error("Error updating cart:", error);
       });

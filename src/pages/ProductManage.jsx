@@ -126,7 +126,7 @@ class ProductManage extends Component {
                         <td>
                           <img
                             style={{ width: "100%" }}
-                            src={`/assets/images/${product.imageUrls[0]}`}
+                            src={product.imageUrls[0]}
                             alt=""
                             srcSet=""
                           />
