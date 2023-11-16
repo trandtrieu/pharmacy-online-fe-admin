@@ -11,6 +11,9 @@ import PrescriptionDetailHandle from "./pages/PrescriptionDetailHandle";
 import ProductItem from "./pages/ProductItem";
 import CreateProductComponent from "./pages/CreateProductComponent";
 import ViewProductDetailComponent from "./pages/ViewProductDetailComponent";
+import Accounts from "./pages/Accounts"
+import AccountUpdate from "./pages/AccountUpdate";
+import AccountCreate from "./pages/AccountCreate";
 
 function App() {
   return (
@@ -41,6 +44,10 @@ function App() {
             path="/prescription-detail-handle/:id"
             component={PrescriptionDetailHandle}
           />
+          <Route path="/accounts" component={Accounts} />
+          <Route path="/update-account/:id" component={AccountUpdate} />
+          <Route path="/create-account" component={AccountCreate} />
+
         </Switch>
       </Router>
     </div>

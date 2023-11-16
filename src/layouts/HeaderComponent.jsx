@@ -68,6 +68,17 @@ class HeaderComponent extends Component {
                     <span className="hide-menu">Prescriptions</span>
                   </Link>
                 </li>
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <Link className="sidebar-link" to="/accounts">
+                    <span>
+                      <FontAwesomeIcon icon={faPills} />{" "}
+                    </span>
+                    <span className="hide-menu">Accounts</span>
+                  </Link>
+                </li>
               </ul>
             </nav>
             {/* End Sidebar navigation */}
