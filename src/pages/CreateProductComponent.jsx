@@ -93,10 +93,7 @@ class CreateProductComponent extends Component {
         //     toast.error("Please select a category before saving.");
         //     return;
         // }
-        if (!this.state.name || !this.state.brand || !this.state.price || !this.state.quantity || !this.state.madeIn || !this.state.category_id || !this.state.type || !this.state.status) {
-            toast.error("Please fill in all required fields.");
-            return;
-        }
+
         let product = {
             name: this.state.name,
             brand: this.state.brand,
@@ -123,6 +120,10 @@ class CreateProductComponent extends Component {
 
         // step 5
         if (this.state.id === '_add') {
+            if (!this.state.name || !this.state.brand || !this.state.price || !this.state.quantity || !this.state.madeIn || !this.state.category_id || !this.state.type || !this.state.status) {
+                toast.error("Please fill in all required fields.");
+                return;
+            }
             ProductServices.CreateProduct(product).then(res => {
                 this.props.history.push('/product-manage');
                 toast.success("Create Product succesfully");
@@ -238,32 +239,6 @@ class CreateProductComponent extends Component {
             return this.state.brand;
         }
     }
-    checkPrice = () => {
-        // var name = document.getElementById("txt_name").value;
-        var check_error_price = document.getElementById("price-error");
-        var regexPrice = /^\d+$/;
-        if (this.state.price === "" | this.state.price === null) {
-            check_error_price.innerHTML = "Product Price cannot be empty!"
-        } else if (!regexPrice.test(this.state.price)) {
-            check_error_price.innerHTML = "Invalid Price(Must be number)!"
-        } else {
-            check_error_price.innerHTML = ""
-            return this.state.price;
-        }
-    }
-    checkQuantity = () => {
-        // var name = document.getElementById("txt_name").value;
-        var check_error_quantity = document.getElementById("quantity-error");
-        var regexQuantity = /^\d+$/;
-        if (this.state.quantity === "" | this.state.quantity === null) {
-            check_error_quantity.innerHTML = "Product Quantity cannot be empty!"
-        } else if (!regexQuantity.test(this.state.quantity)) {
-            check_error_quantity.innerHTML = "Invalid Quantity(Must be number)!"
-        } else {
-            check_error_quantity.innerHTML = ""
-            return this.state.quantity;
-        }
-    }
     checkMadeIn = () => {
         // var name = document.getElementById("txt_name").value;
         var check_error_madeIn = document.getElementById("madeIn-error");
@@ -328,10 +303,9 @@ class CreateProductComponent extends Component {
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <label> Product Price:
                                                 </label>
-                                                <FontAwesomeIcon style={{ color: '#F40009' }} icon={faTriangleExclamation} />
                                             </div>
-                                            <input placeholder="Type Price" name="price" className="form-control"
-                                                value={this.state.price} onChange={this.changePrice} onBlur={this.checkPrice} />
+                                            <input placeholder="Type Price" name="price" className="form-control" type='number'
+                                                value={this.state.price} onChange={this.changePrice} />
                                             <span id='price-error'></span>
                                         </div>
 
@@ -339,10 +313,9 @@ class CreateProductComponent extends Component {
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <label> Product Quantity:
                                                 </label>
-                                                <FontAwesomeIcon style={{ color: '#F40009' }} icon={faTriangleExclamation} />
                                             </div>
                                             <input placeholder="Type Quantity" name="guide" className="form-control"
-                                                value={this.state.quantity} onChange={this.changeQuantity} onBlur={this.checkQuantity} />
+                                                value={this.state.quantity} onChange={this.changeQuantity} type='number' />
                                             <span id='quantity-error'></span>
                                         </div>
                                     </div>

@@ -82,7 +82,6 @@ class ProductManage extends Component {
                           placeholder="Search for products"
                           onChange={this.setSearch}
                         />
-
                       </div>
                     </form>
                   </div>
