@@ -9,3 +9,11 @@ export const getAllDiscount = () => {
 export const getGenerateCode = () => {
     return axios.get(Discount_API_BASE_URL + 'generate-code')
 }
+
+export const createDiscountCode = (discountcode) => {
+    return axios.post(Discount_API_BASE_URL + 'create-discountcode', discountcode)
+}
+
+export const deleteDiscountCode = (discountcodeID) => {
+    return axios.delete(Discount_API_BASE_URL + "delete/"  + discountcodeID)
+}

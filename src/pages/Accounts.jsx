@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
 import { deleteAccount, getAccounts } from '../services/AccountService';
 import { toast } from 'react-toastify';
+import ReactModal from 'react-modal';
+import { Modal } from 'bootstrap';
+
+const customStyles = {
+    content: {
+      top: "35%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      width: "30%",
+      transform: "translate(-40%, -10%)",
+    },
+  };
 
 class Accounts extends Component {
 
@@ -37,7 +51,7 @@ class Accounts extends Component {
         this.props.history.push("/update-account/" + id)
     }
 
-    addAccount(){
+    addAccount() {
         this.props.history.push("/create-account")
     }
 
@@ -56,10 +70,15 @@ class Accounts extends Component {
     render() {
         return (
             <>
+
+
+
+
                 <div className="body-wrapper">
+
                     <h2 className='text-center'>Account List</h2>
                     <div className='container'>
-                    <button className='btn btn-primary' style={{marginBottom : "10px"}} onClick={this.addAccount} >Create Account</button>
+                        <button className='btn btn-primary' style={{ marginBottom: "10px" }} onClick={this.addAccount} >Create Account</button>
                         <table className='table table-striped table-bordered'>
                             <thead>
                                 <tr>
@@ -87,7 +106,18 @@ class Accounts extends Component {
                                                 View
                                             </button>
                                         </td>
+
+                                        <ReactModal isOpen={false} style={customStyles}>
+                                            <img style={{
+                                                width: '50px'
+                                            }} src="../assets/images/avatar/1.jpg" alt="" />
+                                        <h2>{user.username}</h2>
+                                        <h2>{user.mail}</h2>
+                                        <h2></h2>
+                                        </ReactModal>
+
                                     </tr>
+
                                 ))}
                             </tbody>
                         </table>

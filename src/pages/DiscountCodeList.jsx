@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react"
-import { getAllDiscount } from "../services/DiscountService";
+import { deleteDiscountCode, getAllDiscount } from "../services/DiscountService";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 
 
 
@@ -8,6 +9,7 @@ import { getAllDiscount } from "../services/DiscountService";
 const DiscountCodeList = () => {
 
     const [vouchers, setVouchers] = useState([]);
+    const [r, setR] = useState()
 
     useEffect(
         () => {
@@ -16,7 +18,7 @@ const DiscountCodeList = () => {
                     setVouchers(response.data)
                 }
             )
-        }
+        }, [r]
     )
 
     // ---------------------------------------------------------
@@ -26,7 +28,11 @@ const DiscountCodeList = () => {
     }
 
     const deleteVoucher = (id) => {
-        
+        deleteDiscountCode(id).then(
+            response => {
+                setR(Math.random())
+            }
+        )
     }
 
     const addVoucher = () => {
@@ -36,15 +42,16 @@ const DiscountCodeList = () => {
     return (
         <div className="body-wrapper">
             <h2 className='text-center'>Voucher list</h2>
-                    <div className='container'>
-                    <button className='btn btn-primary' style={{marginBottom : "10px"}} onClick={addVoucher} >Add voucher</button>
+                    <div className='container'>                    
+                    <Link to="/add-discount"><button className='btn btn-primary' style={{marginBottom : "10px"}}>Add voucher</button></Link>
                         <table className='table table-striped table-bordered'>
                             <thead>
                                 <tr>
-                                    <th className='col-md-3'>Code</th>
-                                    <th className='col-md-3'>Discount %</th>
-                                    <th className='col-md-3'>Availabel</th>
-                                    <th className='col-md-3'>Status</th>
+                                    <th className='col-md-2'>Code</th>
+                                    <th className='col-md-2'>Discount %</th>
+                                    <th className='col-md-2'>Available</th>
+                                    <th className='col-md-2'>Available</th>
+                                    <th className='col-md-2'>Status</th>
                                 </tr>
                             </thead>
 
@@ -54,6 +61,8 @@ const DiscountCodeList = () => {
                                         <td className="text-danger">{voucher.code}</td>
                                         <td className="text-danger">{voucher.discountPercentage}</td>
                                         <td className="text-danger">{voucher.timesUsable}</td>
+                                        <td className="text-danger">{voucher.expiryDate}</td>
+
                                         <td>
                                             <button onClick={() => updateVoucher(voucher.id)} className='btn btn-info'>
                                                 Update
