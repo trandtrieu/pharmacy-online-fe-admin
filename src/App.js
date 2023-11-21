@@ -14,6 +14,8 @@ import ViewProductDetailComponent from "./pages/ViewProductDetailComponent";
 import Accounts from "./pages/Accounts"
 import AccountUpdate from "./pages/AccountUpdate";
 import AccountCreate from "./pages/AccountCreate";
+import DiscountCodeList from "./pages/DiscountCodeList";
+import DiscountCodeCreate from "./pages/DiscountCodeCreate";
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function App() {
           <Route path="/accounts" component={Accounts} />
           <Route path="/update-account/:id" component={AccountUpdate} />
           <Route path="/create-account" component={AccountCreate} />
+          <Route path="/discountcodes" component={DiscountCodeList} />
+          <Route path="/add-discount" component={DiscountCodeCreate} />
 
         </Switch>
       </Router>

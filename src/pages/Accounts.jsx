@@ -8,7 +8,7 @@ class Accounts extends Component {
         super(props)
 
         this.state = {
-            users: []
+            accounts: []
         }
 
         this.deleteAccount = this.deleteAccount.bind(this)
@@ -23,8 +23,8 @@ class Accounts extends Component {
                 response => {
                     this.setState(
                         {
-                            users: this.state.users.filter(
-                                user => user.id !== id
+                            accounts: this.state.accounts.filter(
+                                account => account.id !== id
                             )
                         }
                     )
@@ -45,7 +45,7 @@ class Accounts extends Component {
         getAccounts().then(
             response => {
                 this.setState({
-                    users: response.data
+                    accounts: response.data
                 })
             }
         )
@@ -57,25 +57,25 @@ class Accounts extends Component {
         return (
             <>
                 <div className="body-wrapper">
-                    <h2 className='text-center'>Employees List</h2>
+                    <h2 className='text-center'>Account List</h2>
                     <div className='container'>
-                    <button className='btn btn-primary' style={{marginBottom : "10px"}} onClick={this.addAccount} >Add Employee</button>
+                    <button className='btn btn-primary' style={{marginBottom : "10px"}} onClick={this.addAccount} >Create Account</button>
                         <table className='table table-striped table-bordered'>
                             <thead>
                                 <tr>
-                                    <th className='col-md-3'>Employee name</th>
-                                    <th className='col-md-3'>Employee Email</th>
-                                    <th className='col-md-3'>Phone</th>
+                                    <th className='col-md-3'>Username</th>
+                                    <th className='col-md-3'>Full Name</th>
+                                    <th className='col-md-3'>Email</th>
                                     <th className='col-md-3'>Actions</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {this.state.users.map((user) => (
+                                {this.state.accounts.map((user) => (
                                     <tr key={user.id}>
+                                        <td>{user.username}</td>
                                         <td>{user.name}</td>
                                         <td>{user.mail}</td>
-                                        <td>{user.phone}</td>
                                         <td>
                                             <button onClick={() => this.updateAccount(user.id)} className='btn btn-info'>
                                                 Update
