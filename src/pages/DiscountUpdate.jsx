@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { createDiscountCode, getGenerateCode } from "../services/DiscountService";
-import { toast } from "react-toastify";
+import { createDiscountCode, getDiscountCodeById, getGenerateCode, updateDiscountCode } from "../services/DiscountService";
 
-class DiscountCodeCreate extends Component {
+
+class DiscountUpdate extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.match.params.id,
             code: "",
             discountPercentage: "",
             expiryDate: "",
@@ -17,6 +18,25 @@ class DiscountCodeCreate extends Component {
             allMS: ""
         };
     }
+
+    componentDidMount(){
+        getDiscountCodeById(this.state.id).then(
+            reponse => {
+                let discountCode = reponse.data
+
+                this.setState({
+                    code: discountCode.code,
+                    discountPercentage: discountCode.discountPercentage,
+                    expiryDate: discountCode.expiryDate,
+                    timesUsable: discountCode.timesUsable,
+                }
+                )
+            }
+        )
+    }
+
+
+
 
     generateCode = (e) => {
         e.preventDefault();
@@ -83,7 +103,7 @@ class DiscountCodeCreate extends Component {
 
 
 
-    handleAdd = (e) => {
+    handleUpdate = (e) => {
         e.preventDefault();
         if (!this.state.code || !this.state.discountPercentage || !this.state.expiryDate || !this.state.timesUsable) {
             this.setState(
@@ -101,10 +121,9 @@ class DiscountCodeCreate extends Component {
                 status: 1,
             };
 
-            createDiscountCode(discountCode).then((response) => {
+            updateDiscountCode(this.state.id, discountCode).then((response) => {
                 console.log(response.data);
                 this.props.history.push("/discountcodes")
-                toast.success("Create successfully!")
             });
         }
 
@@ -205,9 +224,9 @@ class DiscountCodeCreate extends Component {
 
                                         <button
                                             className="btn btn-success"
-                                            onClick={this.handleAdd}
+                                            onClick={this.handleUpdate}
                                         >
-                                            Add
+                                            Update
                                         </button>
                                         <button
                                             className="btn btn-danger"
@@ -223,9 +242,10 @@ class DiscountCodeCreate extends Component {
                         </div>
                     </div>
                 </div>
+                
             </div>
         );
     }
 }
 
-export default DiscountCodeCreate;
+export default DiscountUpdate;

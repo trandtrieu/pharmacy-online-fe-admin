@@ -1,4 +1,4 @@
-import { faFileInvoice, faPills } from "@fortawesome/free-solid-svg-icons";
+import { faFileInvoice, faImagePortrait, faPercent, faPills } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
@@ -74,7 +74,7 @@ class HeaderComponent extends Component {
                 >
                   <Link className="sidebar-link" to="/accounts">
                     <span>
-                      <FontAwesomeIcon icon={faPills} />{" "}
+                    <FontAwesomeIcon icon={faImagePortrait} />{" "}
                     </span>
                     <span className="hide-menu">Accounts</span>
                   </Link>
@@ -84,8 +84,8 @@ class HeaderComponent extends Component {
                   style={{ backgroundColor: "transparent" }}
                 >
                   <Link className="sidebar-link" to="/discountcodes">
-                    <span>
-                      <i className="ti ti-layout-dashboard" />
+                    <span>                    
+                      <FontAwesomeIcon icon={faPercent} />
                     </span>
                     <span className="hide-menu">Discount</span>
                   </Link>
