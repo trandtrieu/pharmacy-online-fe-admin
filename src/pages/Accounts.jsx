@@ -45,6 +45,8 @@ class Accounts extends Component {
                         currentUserId: null, // Close the modal after deletion
                     });
                 }
+            ).catch(
+                error => console.log(error)
             )
         }
     }

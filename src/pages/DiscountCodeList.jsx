@@ -20,14 +20,13 @@ const DiscountCodeList = () => {
                     setVouchers(response.data)
                 }
             )
+            .catch(
+                error => console.log(error)
+            )
         }, [r]
     )
 
     // ---------------------------------------------------------
-
-    const updateVoucher = (id) => {
-
-    }
 
     const deleteVoucher = (id) => {
         if (window.confirm("Are you sure to delete this Discount code?")) {
@@ -37,10 +36,6 @@ const DiscountCodeList = () => {
                 }
             )
         }
-    }
-
-    const addVoucher = () => {
-
     }
 
     return (
@@ -54,7 +49,7 @@ const DiscountCodeList = () => {
                             <th className='col-md-2'>Code</th>
                             <th className='col-md-2'>Discount %</th>
                             <th className='col-md-2'>Available</th>
-                            <th className='col-md-2'>Available</th>
+                            <th className='col-md-2'>Expiration date</th>
                             <th className='col-md-2'>Status</th>
                         </tr>
                     </thead>

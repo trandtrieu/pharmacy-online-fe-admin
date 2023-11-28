@@ -13,6 +13,7 @@ class AccountCreate extends Component {
             dob: "",
             password: "",
             phone: "",
+            roles: "user",
             nameMS: "",
             usernameMS: "",
             mailMS: "",
@@ -28,6 +29,7 @@ class AccountCreate extends Component {
         this.changePhoneHandler = this.changePhoneHandler.bind(this)
         this.changeUsernameHandler = this.changeUsernameHandler.bind(this)
         this.changePasswordHandler = this.changePasswordHandler.bind(this)
+        this.changeRoleHandler = this.changeRoleHandler.bind(this)
         this.createAccount = this.createAccount.bind(this)
         this.validateName = this.validateName.bind(this)
         this.validateMail = this.validateMail.bind(this)
@@ -127,6 +129,11 @@ class AccountCreate extends Component {
                 {
                     dobMS: 'Date of birth cannot be in the future'
                 });
+        }else{
+            this.setState(
+                {
+                    dobMS: ''
+                });
         }
 
         const minAgeDate = new Date();
@@ -135,6 +142,11 @@ class AccountCreate extends Component {
             this.setState(
                 {
                     dobMS: 'You must enough 18 year old'
+                });
+        }else{
+            this.setState(
+                {
+                    dobMS: ''
                 });
         }
     }
@@ -148,7 +160,7 @@ class AccountCreate extends Component {
         if (!this.state.name || !this.state.mail || !this.state.phone || !this.state.username || !this.state.password) {
             this.setState(
                 {
-                    allMS: "Check again!"
+                    allMS: "Please fill all required feild!"
                 }
             )
         } else {
@@ -159,11 +171,13 @@ class AccountCreate extends Component {
                 password: this.state.password,
                 mail: this.state.mail,
                 dob: this.state.dob,
-                phone: this.state.phone
+                phone: this.state.phone,
+                roles: this.state.roles
             };
 
             addAccount(account).then(response => {
                 this.props.history.push('/accounts');
+                console.log(account)
                 toast.success('Create account successully!')
             });
         }
@@ -173,6 +187,11 @@ class AccountCreate extends Component {
         this.props.history.push('/accounts')
     }
 
+    changeRoleHandler = e => {
+        this.setState({
+            roles: e.target.value
+        })
+    }
 
     changeNameHandler = e => {
         this.setState({
@@ -254,6 +273,13 @@ class AccountCreate extends Component {
                                                 <input placeholder='Password' id="password" name='password' className='form-control' onBlur={this.validatePassword} value={this.state.password} onChange={this.changePasswordHandler} type="text" />
                                             </div>
                                             <p className='text-danger'>{this.state.passwordMS}</p>
+                                            <div className='form-group'>
+                                                <label htmlFor="role">Role:<span style={{ color: 'red' }}>*</span></label>
+                                                <select className='form-control' name="role" id="role" onChange={this.changeRoleHandler}>                                                    
+                                                    <option value="user">User</option>
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                            </div>
                                             <button className='btn btn-success' onClick={this.createAccount}>Add</button>
                                             <button className='btn btn-danger' onClick={this.cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
                                             <p className='text-danger'>{this.state.allMS}</p>
