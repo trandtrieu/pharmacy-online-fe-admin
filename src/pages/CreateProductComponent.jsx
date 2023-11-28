@@ -327,11 +327,8 @@ class CreateProductComponent extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label for="a"> Product Name:</label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label for="a"> Product Name: <span style={{ fontSize: '16px' }}>*</span></label>
+
                       </div>
                       <input
                         id="txt-name"
@@ -346,11 +343,7 @@ class CreateProductComponent extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Brand:</label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label> Product Brand: <span style={{ fontSize: '16px' }}>*</span>  </label>
                       </div>
                       <input
                         placeholder="Type Brand"
@@ -366,11 +359,11 @@ class CreateProductComponent extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Price:</label>
-                        <FontAwesomeIcon
+                        <label> Product Price: <span style={{ fontSize: '16px' }}>*</span></label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <input
                         placeholder="Type Price"
@@ -379,17 +372,18 @@ class CreateProductComponent extends Component {
                         value={this.state.price}
                         onChange={this.changePrice}
                         onBlur={this.checkPrice}
+                        type="number"
                       />
                       <span id="price-error"></span>
                     </div>
 
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Quantity:</label>
-                        <FontAwesomeIcon
+                        <label> Product Quantity: <span style={{ fontSize: '16px' }}>*</span></label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <input
                         placeholder="Type Quantity"
@@ -398,6 +392,7 @@ class CreateProductComponent extends Component {
                         value={this.state.quantity}
                         onChange={this.changeQuantity}
                         onBlur={this.checkQuantity}
+                        type="number"
                       />
                       <span id="quantity-error"></span>
                     </div>
@@ -406,11 +401,13 @@ class CreateProductComponent extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Type: </label>
-                        <FontAwesomeIcon
+                        <label> Product Type:
+                          <span style={{ fontSize: '16px', height: "11px" }}>*</span>
+                        </label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <select
                         onChange={this.changeType}
@@ -432,11 +429,11 @@ class CreateProductComponent extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Status: </label>
-                        <FontAwesomeIcon
+                        <label> Product Status: <span style={{ fontSize: '16px', height: "11px" }}>*</span> </label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <select
                         onChange={this.changeStatus}
@@ -533,11 +530,8 @@ class CreateProductComponent extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label for="a"> Made In:</label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label for="a"> Made In:  <span style={{ fontSize: '16px' }}>*</span> </label>
+
                       </div>
                       <input
                         id="madeIn"
@@ -574,11 +568,8 @@ class CreateProductComponent extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label>Category: </label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label>Category: <span style={{ fontSize: '16px' }}>*</span>  </label>
+
                       </div>
                       <select
                         style={{
