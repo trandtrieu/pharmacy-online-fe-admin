@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye } from "@fortawesome/free-solid-svg-icons";
 import CartServices from "../services/CartServices";
 import { toast } from "react-toastify";
+import { convertDollarToVND } from "../utils/cartutils";
 class ProductItem extends Component {
   constructor(props) {
     super(props);
@@ -42,6 +43,9 @@ class ProductItem extends Component {
       console.log(searchTerm);
     }, 400);
   };
+  viewProductById(id) {
+    this.props.history.push(`/view-product-by-id/${id}`);
+  }
 
   render() {
     return (
@@ -75,7 +79,8 @@ class ProductItem extends Component {
                   <tr>
                     <th style={{ textAlign: "center" }}>Image</th>
                     <th>Name</th>
-                    <th>Brand</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                     <th>Actions</th>
                   </tr>
@@ -94,7 +99,7 @@ class ProductItem extends Component {
                         <td>
                           <img
                             style={{ width: "100%" }}
-                            src={`../assets/images/${product.imageUrls[0]}`}
+                            src={product.imageUrls[0]}
                             alt=""
                             srcSet=""
                             width={10}
@@ -102,14 +107,20 @@ class ProductItem extends Component {
                           />
                         </td>
                         <td>{product.name}</td>
-                        <td> {product.brand}</td>
-                        <td>{product.price}</td>
+                        <td>
+                          {product.type === 1
+                            ? "Prescription Compliance"
+                            : "No Need Prescription Compliance"}
+                        </td>
+                        <td> {product.quantity}</td>
+                        <td>{convertDollarToVND(product.price)} VND</td>
                         <td>
                           <button
                             type="button"
-                            data-toggle="modal"
-                            data-target={`#myModal${product.productId}`}
                             className="btn"
+                            onClick={() =>
+                              this.viewProductById(product.productId)
+                            }
                           >
                             <span>
                               <FontAwesomeIcon icon={faEye} />

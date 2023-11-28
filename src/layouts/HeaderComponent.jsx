@@ -1,4 +1,8 @@
-import { faFileInvoice, faPills } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileInvoice,
+  faPercent,
+  faPills,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
@@ -66,6 +70,39 @@ class HeaderComponent extends Component {
                       <FontAwesomeIcon icon={faFileInvoice} />{" "}
                     </span>
                     <span className="hide-menu">Prescriptions</span>
+                  </Link>
+                </li>
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <Link className="sidebar-link" to="/accounts">
+                    <span>
+                      <FontAwesomeIcon icon={faPills} />{" "}
+                    </span>
+                    <span className="hide-menu">Accounts</span>
+                  </Link>
+                </li>
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <Link className="sidebar-link" to="/category-manage">
+                    <span>
+                      <FontAwesomeIcon icon={faPills} />{" "}
+                    </span>
+                    <span className="hide-menu">Categories</span>
+                  </Link>
+                </li>{" "}
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <Link className="sidebar-link" to="/discountcodes">
+                    <span>
+                      <FontAwesomeIcon icon={faPercent} />
+                    </span>
+                    <span className="hide-menu">Discount</span>
                   </Link>
                 </li>
               </ul>

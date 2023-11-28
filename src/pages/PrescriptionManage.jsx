@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import PrescriptionServices from "../services/PrescriptionServices";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleInfo,
-  faReply,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
+import ReactPaginate from "react-paginate";
 
 const customStyles = {
   content: {
@@ -30,9 +27,13 @@ class PrescriptionManage extends Component {
       prescriptionItemToDelete: null,
       isModalOpen: false,
       sortByTimeOption: "0",
-      sortType: "status", // Mặc định sắp xếp theo trạng thái
-      // Mặc định sắp xếp từ mới đến cũ
+      sortType: "status",
+      searchTerm: "",
+      currentPage: 0,
+      prescriptionsPerPage: 4,
     };
+
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   enlargeImage = (imageURL) => {
@@ -44,6 +45,10 @@ class PrescriptionManage extends Component {
   };
 
   componentDidMount() {
+    this.fetchPrescriptions();
+  }
+
+  fetchPrescriptions = () => {
     PrescriptionServices.getListPrescription()
       .then((res) => {
         this.setState({ prescriptions: res.data });
@@ -52,7 +57,7 @@ class PrescriptionManage extends Component {
       .catch((error) => {
         console.error("Lỗi khi tải toa thuốc:", error);
       });
-  }
+  };
 
   loadPrescriptionsByStatus() {
     PrescriptionServices.getListPrescriptionByFilterStatus(this.state.sortType)
@@ -68,7 +73,10 @@ class PrescriptionManage extends Component {
   handleSortByStatus = (event) => {
     const selectedStatus = event.target.value;
     this.setState({ sortType: "status" });
+    this.fetchPrescriptionsByStatus(selectedStatus);
+  };
 
+  fetchPrescriptionsByStatus = (selectedStatus) => {
     PrescriptionServices.getListPrescriptionByFilterStatus(selectedStatus)
       .then((res) => {
         this.setState({ prescriptions: res.data });
@@ -76,26 +84,6 @@ class PrescriptionManage extends Component {
       })
       .catch((error) => {
         console.error("Lỗi khi tải sản phẩm:", error);
-      });
-  };
-
-  updateStatus = (status, id) => {
-    PrescriptionServices.updateStatusPrescription(status, id)
-      .then((response) => {
-        console.log("Status updated successfully:", response.data);
-        const updatedPrescriptions = this.state.prescriptions.map(
-          (prescriptionItem) => {
-            if (prescriptionItem.id === id) {
-              prescriptionItem.status = status;
-            }
-            return prescriptionItem;
-          }
-        );
-        this.setState({ prescriptions: updatedPrescriptions });
-        toast.success("Update status succesfully");
-      })
-      .catch((error) => {
-        console.error("Error updating status:", error);
       });
   };
 
@@ -135,7 +123,25 @@ class PrescriptionManage extends Component {
       prescriptionItemToDelete: null,
     });
   };
-
+  updateStatus = (status, id) => {
+    PrescriptionServices.updateStatusPrescription(status, id)
+      .then((response) => {
+        console.log("Status updated successfully:", response.data);
+        const updatedPrescriptions = this.state.prescriptions.map(
+          (prescriptionItem) => {
+            if (prescriptionItem.id === id) {
+              prescriptionItem.status = status;
+            }
+            return prescriptionItem;
+          }
+        );
+        this.setState({ prescriptions: updatedPrescriptions });
+        toast.success("Update status succesfully");
+      })
+      .catch((error) => {
+        console.error("Error updating status:", error);
+      });
+  };
   toProductList() {
     this.props.history.push(`/product-manage`);
   }
@@ -143,8 +149,28 @@ class PrescriptionManage extends Component {
   toDetailandHandle(id) {
     this.props.history.push(`/prescription-detail-handle/${id}`);
   }
+
+  handlePageChange = ({ selected }) => {
+    this.setState({ currentPage: selected });
+  };
   render() {
-    const { enlargedImage } = this.state;
+    const { enlargedImage, searchTerm, currentPage, prescriptionsPerPage } =
+      this.state;
+    const filteredPrescriptions = this.state.prescriptions.filter(
+      (prescriptionItem) =>
+        prescriptionItem.name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        prescriptionItem.id.toString().includes(searchTerm)
+    );
+    const indexOfLastPrescription = (currentPage + 1) * prescriptionsPerPage;
+    const indexOfFirstPrescription =
+      indexOfLastPrescription - prescriptionsPerPage;
+    const currentPrescriptions = filteredPrescriptions.slice(
+      indexOfFirstPrescription,
+      indexOfLastPrescription
+    );
+
     return (
       <>
         <Modal
@@ -262,6 +288,17 @@ class PrescriptionManage extends Component {
                     <div className="col-12 pb-1">
                       <div className="d-flex align-items-center justify-content-between mb-4">
                         <div className="ml-2">
+                          <input
+                            type="text"
+                            placeholder="Search by name or code..."
+                            value={this.state.searchTerm}
+                            onChange={(e) =>
+                              this.setState({ searchTerm: e.target.value })
+                            }
+                            className="form-control"
+                          />
+                        </div>
+                        <div className="ml-2">
                           <div className="btn-group ml-2">
                             <select
                               className="form-select"
@@ -277,10 +314,10 @@ class PrescriptionManage extends Component {
                         </div>
                       </div>
                     </div>
-                    {this.state.prescriptions.length === 0 ? (
+                    {filteredPrescriptions.length === 0 ? (
                       <div className="container">
                         <h5 className="text-center text-warning">
-                          No prescriptions in the list
+                          No prescriptions match the search criteria
                         </h5>
                       </div>
                     ) : (
@@ -315,109 +352,100 @@ class PrescriptionManage extends Component {
                             </tr>
                           </thead>
                           <tbody>
-                            {this.state.prescriptions.map(
-                              (prescriptionItem) => (
-                                <tr key={prescriptionItem.id}>
-                                  <td className="border-bottom-0">
-                                    <h6 className="fw-semibold mb-0">
-                                      {prescriptionItem.id}
-                                    </h6>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <p className="mb-0 fw-normal">
-                                      {" "}
-                                      {prescriptionItem.name}
-                                    </p>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <h6 className="fw-semibold mb-1">
-                                      {prescriptionItem.email}
-                                    </h6>
-                                    <span className="fw-normal">
-                                      {" "}
-                                      {prescriptionItem.phone}
-                                    </span>
-                                  </td>
+                            {currentPrescriptions.map((prescriptionItem) => (
+                              <tr key={prescriptionItem.id}>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-0">
+                                    {prescriptionItem.id}
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <p className="mb-0 fw-normal">
+                                    {" "}
+                                    {prescriptionItem.name}
+                                  </p>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-1">
+                                    {prescriptionItem.email}
+                                  </h6>
+                                  <span className="fw-normal">
+                                    {" "}
+                                    {prescriptionItem.phone}
+                                  </span>
+                                </td>
 
-                                  <td className="border-bottom-0">
-                                    <h6 className="fw-semibold mb-0 fs-4">
-                                      {prescriptionItem.note}
-                                    </h6>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <h6 className="fw-semibold mb-0 fs-4">
-                                      <img
-                                        src={`assets/images/${prescriptionItem.imageUrls}`}
-                                        alt="em"
-                                        width={35}
-                                        height={35}
-                                        onClick={() =>
-                                          this.enlargeImage(
-                                            `assets/images/${prescriptionItem.imageUrls}`
-                                          )
-                                        }
-                                      />
-                                    </h6>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <h6 className="fw-semibold mb-1">
-                                      {prescriptionItem.createdDate}
-                                    </h6>
-                                    <span className="fw-normal">
-                                      {prescriptionItem.createdTime}
-                                    </span>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <select
-                                      className="btn btn-primary"
-                                      aria-label="Default select example"
-                                      value={prescriptionItem.status}
-                                      onChange={(e) => {
-                                        this.updateStatus(
-                                          e.target.value,
-                                          prescriptionItem.id
-                                        );
-                                      }}
-                                    >
-                                      <option value={0}>
-                                        Waiting for advice
-                                      </option>
-                                      <option value={1}>Confirmed</option>
-                                    </select>
-                                  </td>
-                                  <td className="border-bottom-0">
-                                    <button
-                                      className="btn btn-primary"
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-0 fs-4">
+                                    {prescriptionItem.note}
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-0 fs-4">
+                                    <img
+                                      src={`assets/images/${prescriptionItem.imageUrls}`}
+                                      alt="em"
+                                      width={35}
+                                      height={35}
                                       onClick={() =>
-                                        this.handleRemoveFromCart(
-                                          prescriptionItem
+                                        this.enlargeImage(
+                                          `assets/images/${prescriptionItem.imageUrls}`
                                         )
                                       }
-                                    >
-                                      <FontAwesomeIcon icon={faTrash} />
-                                    </button>
-                                    &nbsp;
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={() => this.toProductList()}
-                                    >
-                                      <FontAwesomeIcon icon={faReply} />
-                                    </button>
-                                    &nbsp;
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={() =>
-                                        this.toDetailandHandle(
-                                          prescriptionItem.id
-                                        )
-                                      }
-                                    >
-                                      <FontAwesomeIcon icon={faCircleInfo} />
-                                    </button>
-                                  </td>
-                                </tr>
-                              )
-                            )}
+                                    />
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-1">
+                                    {prescriptionItem.createdDate}
+                                  </h6>
+                                  <span className="fw-normal">
+                                    {prescriptionItem.createdTime}
+                                  </span>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <select
+                                    className="btn btn-primary"
+                                    aria-label="Default select example"
+                                    value={prescriptionItem.status}
+                                    onChange={(e) => {
+                                      this.updateStatus(
+                                        e.target.value,
+                                        prescriptionItem.id
+                                      );
+                                    }}
+                                  >
+                                    <option value={0}>
+                                      Waiting for advice
+                                    </option>
+                                    <option value={1}>Processed</option>
+                                  </select>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() =>
+                                      this.handleRemoveFromCart(
+                                        prescriptionItem
+                                      )
+                                    }
+                                  >
+                                    <FontAwesomeIcon icon={faTrash} />
+                                  </button>
+                                  &nbsp;
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() =>
+                                      this.toDetailandHandle(
+                                        prescriptionItem.id
+                                      )
+                                    }
+                                  >
+                                    <FontAwesomeIcon icon={faCircleInfo} />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
                           </tbody>
                           {enlargedImage && (
                             <div
@@ -440,18 +468,19 @@ class PrescriptionManage extends Component {
                 </div>
               </div>
             </div>
-            <div className="py-6 px-6 text-center">
-              <p className="mb-0 fs-4">
-                Design and Developed by{" "}
-                <a
-                  href="/"
-                  target="_blank"
-                  className="pe-1 text-primary text-decoration-underline"
-                >
-                  AdminMart.com
-                </a>
-              </p>
-            </div>
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              pageCount={Math.ceil(
+                filteredPrescriptions.length / prescriptionsPerPage
+              )}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageChange}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+            />
           </div>
         </div>
       </>

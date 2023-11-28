@@ -30,6 +30,7 @@ class CreateProductComponent extends Component {
       contraindications: "",
       drugInteractions: "",
       imageUrls: [],
+      uploadMethod: "file",
       categories: [],
       category_id: "",
     };
@@ -199,7 +200,37 @@ class CreateProductComponent extends Component {
     this.setState({ category_id: event.target.value });
     console.log(event.target.value);
   };
+  // changeImg = (event) => {
+  //   const files = event.target.files;
+  //   const imageUrls = [];
+
+  //   for (let i = 0; i < files.length; i++) {
+  //     const fileName = files[i].name;
+  //     imageUrls.push(fileName);
+  //   }
+  //   console.log(imageUrls);
+  //   this.setState({ imageUrls: imageUrls });
+  // };
   changeImg = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent the default behavior of the Enter key
+      const { value, selectionStart, selectionEnd } = event.target;
+      const newValue =
+        value.substring(0, selectionStart) +
+        "\n" +
+        value.substring(selectionEnd);
+
+      this.setState({
+        imageUrls: newValue.split("\n").filter((url) => url.trim() !== ""),
+      });
+    } else {
+      const imageUrls = event.target.value
+        .split("\n")
+        .filter((url) => url.trim() !== "");
+      this.setState({ imageUrls: imageUrls });
+    }
+  };
+  changeImgFile = (event) => {
     const files = event.target.files;
     const imageUrls = [];
 
@@ -210,7 +241,6 @@ class CreateProductComponent extends Component {
     console.log(imageUrls);
     this.setState({ imageUrls: imageUrls });
   };
-
   cancel() {
     this.props.history.push("/product-manage");
   }
@@ -296,6 +326,12 @@ class CreateProductComponent extends Component {
       );
     }
   }
+  toggleUploadMethod = (event) => {
+    this.setState({
+      uploadMethod: event.target.value,
+      imageUrls: [], // Đặt lại giá trị của imageUrls khi chuyển phương thức
+    });
+  };
   render() {
     return (
       <div>
@@ -312,7 +348,7 @@ class CreateProductComponent extends Component {
               {this.getTitle()}
               <div className="card-body">
                 <form>
-                  <label className="form-label" for="customFile">
+                  {/* <label className="form-label" for="customFile">
                     Upload Product Image:
                   </label>
                   <input
@@ -323,15 +359,60 @@ class CreateProductComponent extends Component {
                     style={{ height: "38px" }}
                     name="imageUrls"
                     onChange={this.changeImg}
-                  />
+                  /> */}
+                  <label>
+                    Select option upload product image:
+                    <select
+                      value={this.state.uploadMethod}
+                      onChange={this.toggleUploadMethod}
+                      className="mb-3"
+                    >
+                      <option value="file">Upload file</option>
+                      <option value="url">Enter url image</option>
+                    </select>
+                  </label>
+
+                  {this.state.uploadMethod === "file" && (
+                    <div>
+                      {/* Phần tải lên ảnh từ file */}
+                      <label htmlFor="customFile">Upload Product Image:</label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="customFile"
+                        multiple
+                        style={{ height: "38px" }}
+                        name="imageUrls"
+                        onChange={this.changeImgFile}
+                      />
+                    </div>
+                  )}
+
+                  {this.state.uploadMethod === "url" && (
+                    <div>
+                      {/* Phần nhập URL ảnh */}
+                      <label htmlFor="imageUrls">
+                        Add Image URLs (one per line):
+                      </label>
+                      <textarea
+                        className="form-control"
+                        rows="4"
+                        placeholder="Paste image URLs here..."
+                        value={this.state.imageUrls.join("\n")}
+                        onChange={this.changeImg}
+                        onKeyPress={this.changeImg}
+                      />
+                    </div>
+                  )}
+
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label for="a"> Product Name:</label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label for="a">
+                          {" "}
+                          Product Name:{" "}
+                          <span style={{ fontSize: "16px" }}>*</span>
+                        </label>
                       </div>
                       <input
                         id="txt-name"
@@ -346,11 +427,11 @@ class CreateProductComponent extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Brand:</label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label>
+                          {" "}
+                          Product Brand:{" "}
+                          <span style={{ fontSize: "16px" }}>*</span>{" "}
+                        </label>
                       </div>
                       <input
                         placeholder="Type Brand"
@@ -366,11 +447,15 @@ class CreateProductComponent extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Price:</label>
-                        <FontAwesomeIcon
+                        <label>
+                          {" "}
+                          Product Price:{" "}
+                          <span style={{ fontSize: "16px" }}>*</span>
+                        </label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <input
                         placeholder="Type Price"
@@ -379,17 +464,22 @@ class CreateProductComponent extends Component {
                         value={this.state.price}
                         onChange={this.changePrice}
                         onBlur={this.checkPrice}
+                        type="number"
                       />
                       <span id="price-error"></span>
                     </div>
 
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Quantity:</label>
-                        <FontAwesomeIcon
+                        <label>
+                          {" "}
+                          Product Quantity:{" "}
+                          <span style={{ fontSize: "16px" }}>*</span>
+                        </label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <input
                         placeholder="Type Quantity"
@@ -398,6 +488,7 @@ class CreateProductComponent extends Component {
                         value={this.state.quantity}
                         onChange={this.changeQuantity}
                         onBlur={this.checkQuantity}
+                        type="number"
                       />
                       <span id="quantity-error"></span>
                     </div>
@@ -406,11 +497,17 @@ class CreateProductComponent extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Type: </label>
-                        <FontAwesomeIcon
+                        <label>
+                          {" "}
+                          Product Type:
+                          <span style={{ fontSize: "16px", height: "11px" }}>
+                            *
+                          </span>
+                        </label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <select
                         onChange={this.changeType}
@@ -432,11 +529,17 @@ class CreateProductComponent extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label> Product Status: </label>
-                        <FontAwesomeIcon
+                        <label>
+                          {" "}
+                          Product Status:{" "}
+                          <span style={{ fontSize: "16px", height: "11px" }}>
+                            *
+                          </span>{" "}
+                        </label>
+                        {/* <FontAwesomeIcon
                           style={{ color: "#F40009" }}
                           icon={faTriangleExclamation}
-                        />
+                        /> */}
                       </div>
                       <select
                         onChange={this.changeStatus}
@@ -533,11 +636,12 @@ class CreateProductComponent extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label for="a"> Made In:</label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label for="a">
+                          {" "}
+                          Made In: <span style={{ fontSize: "16px" }}>
+                            *
+                          </span>{" "}
+                        </label>
                       </div>
                       <input
                         id="madeIn"
@@ -574,11 +678,9 @@ class CreateProductComponent extends Component {
                     </div>
                     <div className="form-group col-md-6">
                       <div className="d-flex justify-content-between align-items-center">
-                        <label>Category: </label>
-                        <FontAwesomeIcon
-                          style={{ color: "#F40009" }}
-                          icon={faTriangleExclamation}
-                        />
+                        <label>
+                          Category: <span style={{ fontSize: "16px" }}>*</span>{" "}
+                        </label>
                       </div>
                       <select
                         style={{

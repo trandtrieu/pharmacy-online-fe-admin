@@ -42,7 +42,15 @@ class ViewProductDetailComponent extends Component {
                         {" "}
                         <img
                           id="main-image"
-                          src={`/assets/images/${this.state.productDetail.imageUrls}`}
+                          // src={`/assets/images/${this.state.productDetail.imageUrls}`}
+                          src={
+                            `${this.state.productDetail.imageUrls}`?.startsWith(
+                              "https"
+                            )
+                              ? this.state.productDetail.imageUrls
+                              : `../assets/images/${this.state.productDetail.imageUrls}}`
+                          }
+                          alt=""
                           width={250}
                         />{" "}
                       </div>

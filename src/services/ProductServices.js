@@ -4,8 +4,8 @@ const PRODUCT_API_BASE_URL =
   "http://localhost:8080/pharmacy-online/admin/products";
 
 class ProductServices {
-  getProducts() {
-    return axios.get(PRODUCT_API_BASE_URL + "/list-products");
+  getProducts_search() {
+    return axios.get(PRODUCT_API_BASE_URL + "/search-list-products");
   } //http://localhost:8080/pharmacy-online/admin/products/list-products
 
   getProductById(productId) {
