@@ -49,8 +49,10 @@ class OrderManage extends Component {
       this.state;
 
     // Filter based on name
-    let filteredOrders = orders.filter((orderItem) =>
-      orderItem.name.toLowerCase().includes(searchInput.toLowerCase())
+    let filteredOrders = orders.filter(
+      (orderItem) =>
+        orderItem.name &&
+        orderItem.name.toLowerCase().includes(searchInput.toLowerCase())
     );
 
     // Filter based on status
@@ -60,10 +62,12 @@ class OrderManage extends Component {
 
     // Filter based on payment method
     if (paymentMethodFilter) {
-      filteredOrders = filteredOrders.filter((orderItem) =>
-        orderItem.paymentMethod
-          .toLowerCase()
-          .includes(paymentMethodFilter.toLowerCase())
+      filteredOrders = filteredOrders.filter(
+        (orderItem) =>
+          orderItem.paymentMethod &&
+          orderItem.paymentMethod
+            .toLowerCase()
+            .includes(paymentMethodFilter.toLowerCase())
       );
     }
 
@@ -109,7 +113,7 @@ class OrderManage extends Component {
                     <h5 className="card-title fw-semibold mb-4">
                       System Order
                     </h5>
-                    <div className="d-flex">
+                    <div className="col-md-7 d-flex">
                       <input
                         type="text"
                         className="form-control mb-3"
@@ -133,6 +137,8 @@ class OrderManage extends Component {
                           Wait for confirmation
                         </option>
                         <option value="Confirmed">Confirmed</option>
+                        <option value="Delivering">Delivering</option>
+                        <option value="Delivered">Delivered</option>
                       </select>
 
                       <select
@@ -152,101 +158,110 @@ class OrderManage extends Component {
                     </div>
 
                     <div className="table-responsive">
-                      <table className="table text-nowrap mb-0 align-middle">
-                        <thead className="text-dark fs-4">
-                          <tr>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Id</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Name</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">
-                                Payment method
-                              </h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">
-                                Payment status
-                              </h6>
-                            </th>{" "}
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Date</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Status</h6>
-                            </th>
-                            <th className="border-bottom-0">
-                              <h6 className="fw-semibold mb-0">Handle</h6>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {currentOrders.map((orderItem) => (
+                      {currentOrders.length > 0 ? (
+                        <table className="table text-nowrap mb-0 align-middle">
+                          <thead className="text-dark fs-4">
                             <tr>
-                              <td className="border-bottom-0">
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Id</h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Name</h6>
+                              </th>
+                              <th className="border-bottom-0">
                                 <h6 className="fw-semibold mb-0">
-                                  {orderItem.id}
+                                  Payment method
                                 </h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-1">
-                                  {orderItem.name}
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">
+                                  Payment status
                                 </h6>
-                                <span className="fw-normal">
-                                  {orderItem.phone}
-                                </span>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-0 fs-4">
-                                  {" "}
-                                  {orderItem.paymentMethod}
-                                </h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-0 fs-4">
-                                  Successfully
-                                </h6>
-                              </td>
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-1">
-                                  {" "}
-                                  {orderItem.date}
-                                </h6>
-                              </td>{" "}
-                              <td className="border-bottom-0">
-                                <h6 className="fw-semibold mb-1">
-                                  {" "}
-                                  {orderItem.status}
-                                </h6>
-                              </td>{" "}
-                              <td className="border-bottom-0">
-                                <h6
-                                  className="fw-semibold mb-1"
-                                  onClick={() => {
-                                    this.viewDetailOrder(orderItem.id);
-                                  }}
-                                >
-                                  {" "}
-                                  <FontAwesomeIcon icon={faCircleInfo} />
-                                </h6>
-                              </td>{" "}
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Date</h6>
+                              </th>
+                              <th className="border-bottom-0">
+                                <h6 className="fw-semibold mb-0">Status</h6>
+                              </th>
+                              <th className="border-bottom-0 text-center">
+                                <h6 className="fw-semibold mb-0">Handle</h6>
+                              </th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {currentOrders.map((orderItem) => (
+                              <tr>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-0">
+                                    {orderItem.id}
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-1">
+                                    {orderItem.name}
+                                  </h6>
+                                  <span className="fw-normal">
+                                    {orderItem.phone}
+                                  </span>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-0 fs-4">
+                                    {orderItem.paymentMethod}
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-0 fs-4">
+                                    Successfully
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6 className="fw-semibold mb-1">
+                                    {orderItem.date}
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6
+                                    className="fw-semibold mb-1 bg-secondary text-center"
+                                    style={{
+                                      padding: "2px 4px",
+                                      borderRadius: "4px",
+                                      color: "white",
+                                    }}
+                                  >
+                                    {orderItem.status}
+                                  </h6>
+                                </td>
+                                <td className="border-bottom-0">
+                                  <h6
+                                    className="fw-semibold mb-1 text-center"
+                                    onClick={() => {
+                                      this.viewDetailOrder(orderItem.id);
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faCircleInfo} />
+                                  </h6>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : (
+                        <h5 className="text-danger text-center">
+                          No orders found.
+                        </h5>
+                      )}
                     </div>
                   </div>
                 </div>
-              </div>{" "}
+              </div>
               <Pagination
                 currentPage={currentPage}
                 ordersPerPage={ordersPerPage}
                 totalOrders={filteredOrders.length}
                 onPageChange={this.handlePageChange}
               />
-            </div>{" "}
+            </div>
           </div>
         </div>
       </>

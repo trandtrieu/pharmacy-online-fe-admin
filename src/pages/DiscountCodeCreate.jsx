@@ -13,6 +13,7 @@ class DiscountCodeCreate extends Component {
       discountPercentage: "",
       expiryDate: "",
       timesUsable: "",
+      condition: "",
       codeMS: "",
       discountPercentageMS: "",
       expiryDateMS: "",
@@ -45,6 +46,12 @@ class DiscountCodeCreate extends Component {
     this.setState({ timesUsable: e.target.value });
   };
 
+  handleConditionChange = (e) => {
+    this.setState({
+      condition: e.target.value,
+    });
+  };
+
   handleCO = (e) => {
     if (e.target.value == "") {
       this.setState({
@@ -69,7 +76,20 @@ class DiscountCodeCreate extends Component {
     }
   };
 
-  handleEO = (e) => {};
+  handleEO = (e) => {
+    const selectedDate = new Date(e.target.value);
+    const currentDate = new Date();
+
+    if (selectedDate < currentDate) {
+      this.setState({
+        expiryDateMS: "Expiry date cannot be in the past",
+      });
+    } else {
+      this.setState({
+        expiryDateMS: "",
+      });
+    }
+  };
 
   handleTO = (e) => {
     if (e.target.value === "") {
@@ -91,12 +111,14 @@ class DiscountCodeCreate extends Component {
         allMS: "Check again!",
       });
     } else {
-      const { code, discountPercentage, expiryDate, timesUsable } = this.state;
+      const { code, discountPercentage, expiryDate, timesUsable, condition } =
+        this.state;
       const discountCode = {
         code: code,
         discountPercentage: discountPercentage,
         expiryDate: expiryDate,
         timesUsable: timesUsable,
+        condition: condition,
         status: 1,
       };
 
@@ -122,7 +144,7 @@ class DiscountCodeCreate extends Component {
           <div className="container">
             <div className="row">
               <div className="card col-md-6 offset-md-3">
-                <h3 className="text-center">Create Account</h3>
+                <h3 className="text-center">Create Discount code</h3>
                 <div className="card-body">
                   <form action="">
                     <div className="form-group">
@@ -199,6 +221,19 @@ class DiscountCodeCreate extends Component {
                       />
                     </div>
                     <p className="text-danger">{this.state.timesUsableMS}</p>
+
+                    <div className="form-group">
+                      <label htmlFor="condition">Active condition:</label>
+                      <input
+                        placeholder=""
+                        id="condition"
+                        name="condition"
+                        className="form-control"
+                        type="number"
+                        value={this.state.condition}
+                        onChange={this.handleConditionChange}
+                      />
+                    </div>
 
                     <button
                       className="btn btn-success"

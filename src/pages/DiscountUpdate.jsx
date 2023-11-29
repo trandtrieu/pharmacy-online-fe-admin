@@ -84,7 +84,20 @@ class DiscountUpdate extends Component {
     }
   };
 
-  handleEO = (e) => {};
+  handleEO = (e) => {
+    const selectedDate = new Date(e.target.value);
+    const currentDate = new Date();
+
+    if (selectedDate < currentDate) {
+      this.setState({
+        expiryDateMS: "Expiry date cannot be in the past",
+      });
+    } else {
+      this.setState({
+        expiryDateMS: "",
+      });
+    }
+  };
 
   handleTO = (e) => {
     if (e.target.value === "") {
@@ -135,8 +148,8 @@ class DiscountUpdate extends Component {
         <div>
           <div className="container">
             <div className="row">
-              <div className="card col-md-6 offset-md-3">
-                <h3 className="text-center">Create Account</h3>
+              <div className="card col-md-6 offset-md-3 mt-5">
+                <h3 className="text-center">Edit Discount Coupon</h3>
                 <div className="card-body">
                   <form action="">
                     <div className="form-group">

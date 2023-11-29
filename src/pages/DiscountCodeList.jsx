@@ -13,14 +13,14 @@ const DiscountCodeList = () => {
   const [r, setR] = useState();
 
   useEffect(() => {
-    getAllDiscount().then((response) => {
-      setVouchers(response.data);
-    });
+    getAllDiscount()
+      .then((response) => {
+        setVouchers(response.data);
+      })
+      .catch((error) => console.log(error));
   }, [r]);
 
   // ---------------------------------------------------------
-
-  const updateVoucher = (id) => {};
 
   const deleteVoucher = (id) => {
     if (window.confirm("Are you sure to delete this Discount code?")) {
@@ -30,11 +30,9 @@ const DiscountCodeList = () => {
     }
   };
 
-  const addVoucher = () => {};
-
   return (
     <div className="body-wrapper">
-      <h2 className="text-center">Voucher list</h2>
+      <h2 className="text-center">Discount list</h2>
       <div className="container">
         <Link to="/add-discount">
           <button className="btn btn-primary" style={{ marginBottom: "10px" }}>
@@ -47,7 +45,7 @@ const DiscountCodeList = () => {
               <th className="col-md-2">Code</th>
               <th className="col-md-2">Discount %</th>
               <th className="col-md-2">Available</th>
-              <th className="col-md-2">Available</th>
+              <th className="col-md-2">Expiration date</th>
               <th className="col-md-2">Status</th>
             </tr>
           </thead>

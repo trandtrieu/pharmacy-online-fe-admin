@@ -41,12 +41,16 @@ class Accounts extends Component {
 
   deleteAccount(id) {
     if (window.confirm("Are you sure to delete this user?")) {
-      deleteAccount(id).then((response) => {
-        this.setState({
-          accounts: this.state.accounts.filter((account) => account.id !== id),
-          currentUserId: null, // Close the modal after deletion
-        });
-      });
+      deleteAccount(id)
+        .then((response) => {
+          this.setState({
+            accounts: this.state.accounts.filter(
+              (account) => account.id !== id
+            ),
+            currentUserId: null, // Close the modal after deletion
+          });
+        })
+        .catch((error) => console.log(error));
     }
   }
 
