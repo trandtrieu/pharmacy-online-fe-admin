@@ -40,7 +40,7 @@ const DiscountCodeList = () => {
 
     return (
         <div className="body-wrapper">
-            <h2 className='text-center'>Voucher list</h2>
+            <h2 className='text-center'>Discount list</h2>
             <div className='container'>
                 <Link to="/add-discount"><button className='btn btn-primary' style={{ marginBottom: "10px" }}><FontAwesomeIcon icon={faPlus} /></button></Link>
                 <table className='table table-striped table-bordered'>

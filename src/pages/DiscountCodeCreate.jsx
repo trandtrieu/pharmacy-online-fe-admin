@@ -75,9 +75,20 @@ class DiscountCodeCreate extends Component {
     }
 
 
-    handleEO = e => {
-
-    }
+    handleEO = (e) => {
+        const selectedDate = new Date(e.target.value);
+        const currentDate = new Date();
+    
+        if (selectedDate < currentDate) {
+            this.setState({
+                expiryDateMS: "Expiry date cannot be in the past",
+            });
+        } else {
+            this.setState({
+                expiryDateMS: "",
+            });
+        }
+    };
 
 
     handleTO = e => {

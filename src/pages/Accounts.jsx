@@ -79,7 +79,7 @@ class Accounts extends Component {
     render() {
         return (
             <>
-                <div className="body-wrapper">
+                <div className="body-wrapper">                    
                     <h2 className='text-center'>Account List</h2>
                     <div className='container'>
                         <button className='btn btn-primary' style={{ marginBottom: "10px" }} onClick={this.addAccount}>Create Account</button>
