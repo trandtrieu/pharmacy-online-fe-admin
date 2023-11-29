@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
+import SubHeaderComponent from "../layouts/SubHeaderComponent";
 
 class CategoryManage extends Component {
   constructor(props) {
@@ -66,6 +67,8 @@ class CategoryManage extends Component {
     return (
       <>
         <div className="body-wrapper">
+          {" "}
+          <SubHeaderComponent />
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-9 d-flex align-items-stretch">

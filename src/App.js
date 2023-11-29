@@ -20,6 +20,8 @@ import UpdateCategory from "./pages/CategoryUpdate";
 import DiscountUpdate from "./pages/DiscountUpdate";
 import DiscountCodeCreate from "./pages/DiscountCodeCreate";
 import DiscountCodeList from "./pages/DiscountCodeList";
+import OrderManage from "./pages/OrderManage";
+import OrderDetailHandle from "./pages/OrderDetailHandle";
 
 function App() {
   return (
@@ -60,6 +62,12 @@ function App() {
           <Route path="/discountcodes" component={DiscountCodeList} />
           <Route path="/add-discount" component={DiscountCodeCreate} />
           <Route path="/update-discount/:id" component={DiscountUpdate} />
+
+          <Route path="/order-manage" component={OrderManage} />
+          <Route
+            path="/order-detail-handle/:id"
+            component={OrderDetailHandle}
+          />
         </Switch>
       </Router>
     </div>

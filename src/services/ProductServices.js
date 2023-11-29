@@ -8,6 +8,10 @@ class ProductServices {
     return axios.get(PRODUCT_API_BASE_URL + "/search-list-products");
   } //http://localhost:8080/pharmacy-online/admin/products/list-products
 
+  getProducts() {
+    return axios.get(PRODUCT_API_BASE_URL + "/list");
+  } //http://localhost:8080/pharmacy-online/admin/products/list-products
+
   getProductById(productId) {
     return axios.get(PRODUCT_API_BASE_URL + "/" + productId);
   }

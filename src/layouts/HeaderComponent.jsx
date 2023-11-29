@@ -1,4 +1,5 @@
 import {
+  faCashRegister,
   faFileInvoice,
   faPercent,
   faPills,
@@ -103,6 +104,17 @@ class HeaderComponent extends Component {
                       <FontAwesomeIcon icon={faPercent} />
                     </span>
                     <span className="hide-menu">Discount</span>
+                  </Link>
+                </li>
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <Link className="sidebar-link" to="/order-manage">
+                    <span>
+                      <FontAwesomeIcon icon={faCashRegister} />{" "}
+                    </span>
+                    <span className="hide-menu">Orders</span>
                   </Link>
                 </li>
               </ul>
