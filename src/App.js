@@ -11,6 +11,9 @@ import PrescriptionDetailHandle from "./pages/PrescriptionDetailHandle";
 import ProductItem from "./pages/ProductItem";
 import CreateProductComponent from "./pages/CreateProductComponent";
 import ViewProductDetailComponent from "./pages/ViewProductDetailComponent";
+import BlogManage from "./pages/BlogManage";
+import AddBlogComponent from "./pages/AddBlogComponent";
+import UpdateBlogComponent from "./pages/UpdateBlogComponent";
 
 function App() {
   return (
@@ -41,6 +44,9 @@ function App() {
             path="/prescription-detail-handle/:id"
             component={PrescriptionDetailHandle}
           />
+          <Route path="/blog" component={BlogManage}/>
+          <Route path="/add-blog" component={AddBlogComponent}/>
+          <Route path="/update-blog" component={UpdateBlogComponent}/>
         </Switch>
       </Router>
     </div>

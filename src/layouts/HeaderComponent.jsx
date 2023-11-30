@@ -2,6 +2,7 @@ import { faFileInvoice, faPills } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import {faBloggerB} from "@fortawesome/free-brands-svg-icons"
 
 class HeaderComponent extends Component {
   render() {
@@ -66,6 +67,18 @@ class HeaderComponent extends Component {
                       <FontAwesomeIcon icon={faFileInvoice} />{" "}
                     </span>
                     <span className="hide-menu">Prescriptions</span>
+                  </Link>
+                </li>
+
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <Link className="sidebar-link" to="/blog">
+                    <span>
+                    <FontAwesomeIcon icon={faBloggerB} />{" "}
+                    </span>
+                    <span className="hide-menu">Blog Manage</span>
                   </Link>
                 </li>
               </ul>
