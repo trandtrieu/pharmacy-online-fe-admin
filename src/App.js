@@ -22,6 +22,9 @@ import DiscountCodeCreate from "./pages/DiscountCodeCreate";
 import DiscountCodeList from "./pages/DiscountCodeList";
 import OrderManage from "./pages/OrderManage";
 import OrderDetailHandle from "./pages/OrderDetailHandle";
+import BlogManage from "./pages/BlogManage";
+import AddBlogComponent from "./pages/AddBlogComponent";
+import UpdateBlogComponent from "./pages/UpdateBlogComponent";
 
 function App() {
   return (
@@ -68,6 +71,10 @@ function App() {
             path="/order-detail-handle/:id"
             component={OrderDetailHandle}
           />
+
+          <Route path="/blog" component={BlogManage} />
+          <Route path="/add-blog" component={AddBlogComponent} />
+          <Route path="/update-blog/:blog_id" component={UpdateBlogComponent} />
         </Switch>
       </Router>
     </div>

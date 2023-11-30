@@ -1,3 +1,4 @@
+import { faBloggerB } from "@fortawesome/free-brands-svg-icons";
 import {
   faCashRegister,
   faFileInvoice,
@@ -115,6 +116,17 @@ class HeaderComponent extends Component {
                       <FontAwesomeIcon icon={faCashRegister} />{" "}
                     </span>
                     <span className="hide-menu">Orders</span>
+                  </Link>
+                </li>
+                <li
+                  className="sidebar-item"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <Link className="sidebar-link" to="/blog">
+                    <span>
+                      <FontAwesomeIcon icon={faBloggerB} />{" "}
+                    </span>
+                    <span className="hide-menu">Blog Manage</span>
                   </Link>
                 </li>
               </ul>

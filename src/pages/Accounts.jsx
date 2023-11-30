@@ -5,10 +5,13 @@ import ReactModal from "react-modal";
 import {
   faCalendarDays,
   faEnvelope,
+  faPenToSquare,
   faPhone,
+  faTrash,
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
 
 const customStyles = {
   content: {
@@ -83,54 +86,56 @@ class Accounts extends Component {
         <div className="body-wrapper">
           <h2 className="text-center">Account List</h2>
           <div className="container">
-            <button
-              className="btn btn-primary"
-              style={{ marginBottom: "10px" }}
-              onClick={this.addAccount}
-            >
-              Create Account
-            </button>
-            <table className="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th className="col-md-3">Username</th>
-                  <th className="col-md-3">Full Name</th>
-                  <th className="col-md-3">Email</th>
-                  <th className="col-md-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.accounts.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.username}</td>
-                    <td>{user.name}</td>
-                    <td>{user.mail}</td>
-                    <td>
-                      <button
-                        onClick={() => this.updateAccount(user.id)}
-                        className="btn btn-info"
-                      >
-                        Update
-                      </button>
-                      <button
-                        onClick={() => this.deleteAccount(user.id)}
-                        style={{ marginLeft: "10px" }}
-                        className="btn btn-warning"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => this.modelOpen(user.id)}
-                        className="btn btn-success"
-                        style={{ marginLeft: "10px" }}
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="row">
+              <div className="col">
+                {" "}
+                <button
+                  className="btn btn-primary"
+                  style={{ marginBottom: "10px" }}
+                  onClick={this.addAccount}
+                >
+                  Create Account
+                </button>
+                <table className="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th className="col-md-3">Username</th>
+                      <th className="col-md-3">Full Name</th>
+                      <th className="col-md-3">Email</th>
+                      <th className="col-md-3">Role</th>
+                      <th className="col-md-3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.accounts.map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.username}</td>
+                        <td>{user.name}</td>
+                        <td>{user.mail}</td>
+                        <td>{user.roles}</td>
+                        <td>
+                          <FontAwesomeIcon
+                            icon={faPenToSquare}
+                            onClick={() => this.updateAccount(user.id)}
+                            className="p-2"
+                          />
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            onClick={() => this.deleteAccount(user.id)}
+                            className="p-2"
+                          />
+                          <FontAwesomeIcon
+                            icon={faEye}
+                            onClick={() => this.modelOpen(user.id)}
+                            className="p-2"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
           <ReactModal isOpen={this.state.isMOpen} style={customStyles}>

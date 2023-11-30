@@ -173,11 +173,11 @@ class OrderManage extends Component {
                                   Payment method
                                 </h6>
                               </th>
-                              <th className="border-bottom-0">
+                              {/* <th className="border-bottom-0">
                                 <h6 className="fw-semibold mb-0">
                                   Payment status
                                 </h6>
-                              </th>
+                              </th> */}
                               <th className="border-bottom-0">
                                 <h6 className="fw-semibold mb-0">Date</h6>
                               </th>
@@ -210,11 +210,11 @@ class OrderManage extends Component {
                                     {orderItem.paymentMethod}
                                   </h6>
                                 </td>
-                                <td className="border-bottom-0">
+                                {/* <td className="border-bottom-0">
                                   <h6 className="fw-semibold mb-0 fs-4">
                                     Successfully
                                   </h6>
-                                </td>
+                                </td> */}
                                 <td className="border-bottom-0">
                                   <h6 className="fw-semibold mb-1">
                                     {orderItem.date}

@@ -60,6 +60,16 @@ class OrderDetailHandle extends Component {
         this.setState({ orderItem: response.data });
         toast.success("Update order status successfully");
       }
+      if (selectedStatus === "Confirmed") {
+        OrderService.updateQuantity(id)
+          .then((res) => {
+            toast.success("Change quantity successfully");
+          })
+          .catch((error) => {
+            console.error("Error updating quantity:", error);
+            toast.error("Failed to update quantity. Please try again.");
+          });
+      }
     } catch (error) {
       console.error("Error updating order status:", error);
       toast.error("Update order status failed");
@@ -152,6 +162,9 @@ class OrderDetailHandle extends Component {
                         <thead className="text-dark fs-4">
                           <tr>
                             <th className="border-bottom-0">
+                              <h6 className="fw-semibold mb-0">Product id</h6>
+                            </th>
+                            <th className="border-bottom-0">
                               <h6 className="fw-semibold mb-0">Name product</h6>
                             </th>
                             <th className="border-bottom-0">
@@ -165,6 +178,12 @@ class OrderDetailHandle extends Component {
                         <tbody>
                           {this.state.orderProducts.map((productItem) => (
                             <tr key={productItem.productId}>
+                              <td className="border-bottom-0">
+                                <h6 className="fw-semibold mb-1 ">
+                                  {productItem.product_id}
+                                </h6>
+                                <span className="fw-normal"></span>
+                              </td>
                               <td className="border-bottom-0">
                                 <h6 className="fw-semibold mb-1 ">
                                   {productItem.nameproduct}

@@ -22,6 +22,10 @@ class OrderService {
       status
     );
   } //http://localhost:8080/pharmacy-online/admin/order/update_order_status/13
+
+  updateQuantity(orderId) {
+    return axios.put(ORDER_BASE_API + "/updateQuantity/" + orderId);
+  }
 }
 
 export default new OrderService();
