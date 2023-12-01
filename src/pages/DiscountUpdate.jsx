@@ -11,15 +11,17 @@ class DiscountUpdate extends Component {
             discountPercentage: "",
             expiryDate: "",
             timesUsable: "",
+            condition: "",
             codeMS: "",
             discountPercentageMS: "",
             expiryDateMS: "",
             timesUsableMS: "",
-            allMS: ""
+            allMS: "",
+            conditionMs: ""
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         getDiscountCodeById(this.state.id).then(
             reponse => {
                 let discountCode = reponse.data
@@ -29,6 +31,7 @@ class DiscountUpdate extends Component {
                     discountPercentage: discountCode.discountPercentage,
                     expiryDate: discountCode.expiryDate,
                     timesUsable: discountCode.timesUsable,
+                    condition: discountCode.condition
                 }
                 )
             }
@@ -45,6 +48,14 @@ class DiscountUpdate extends Component {
             this.setState({ code: response.data });
         });
     };
+
+    handleConditionChange = e => {
+        this.setState(
+            {
+                condition: e.target.value
+            }
+        )
+    }
 
     handleCodeChange = (e) => {
         this.setState({ code: e.target.value });
@@ -91,7 +102,7 @@ class DiscountUpdate extends Component {
     handleEO = (e) => {
         const selectedDate = new Date(e.target.value);
         const currentDate = new Date();
-    
+
         if (selectedDate < currentDate) {
             this.setState({
                 expiryDateMS: "Expiry date cannot be in the past",
@@ -109,6 +120,25 @@ class DiscountUpdate extends Component {
             this.setState({
                 timesUsableMS: "Cant not be empty"
             })
+        }else{
+            this.setState(
+                {
+                    timesUsableMS: ""
+                }
+            )
+        }
+    }
+
+
+    handleConO = e => {
+        if (e.target.value === "") {
+            this.setState({
+                conditionMs: "Cant not be empty"
+            })
+        } else {
+            this.setState({
+                conditionMs: ""
+            })
         }
     }
 
@@ -123,19 +153,22 @@ class DiscountUpdate extends Component {
                 }
             )
         } else {
-            const { code, discountPercentage, expiryDate, timesUsable } = this.state;
+            const { code, discountPercentage, expiryDate, timesUsable, condition } = this.state;
             const discountCode = {
                 code: code,
                 discountPercentage: discountPercentage,
                 expiryDate: expiryDate,
                 timesUsable: timesUsable,
+                condition: condition,
                 status: 1,
             };
 
             updateDiscountCode(this.state.id, discountCode).then((response) => {
                 console.log(response.data);
                 this.props.history.push("/discountcodes")
-            });
+            }).catch(
+                error => console.log(error)                                
+            );
         }
 
     };
@@ -146,7 +179,7 @@ class DiscountUpdate extends Component {
     }
 
     render() {
-        const { code, discountPercentage, expiryDate, timesUsable } = this.state;
+        const { code, discountPercentage, expiryDate, timesUsable, condition } = this.state;
 
         return (
             <div className="body-wrapper">
@@ -233,6 +266,22 @@ class DiscountUpdate extends Component {
                                         </div>
                                         <p className="text-danger">{this.state.timesUsableMS}</p>
 
+                                        <div className="form-group">
+                                            <label htmlFor="times">Condition:</label>
+                                            <input
+                                                placeholder=""
+                                                id="times"
+                                                name="times"
+                                                className="form-control"
+                                                type="number"
+                                                value={condition}
+                                                onChange={this.handleConditionChange}
+                                                onBlur={this.handleConO}
+
+                                            />
+                                        </div>
+                                        <p className="text-danger">{this.state.conditionMs}</p>
+
                                         <button
                                             className="btn btn-success"
                                             onClick={this.handleUpdate}
@@ -253,7 +302,7 @@ class DiscountUpdate extends Component {
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         );
     }
